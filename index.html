@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nahara.dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+/* Hide custom cursor on touch devices */
+@media (pointer: coarse), (hover: none) {
+  #cur { display: none !important; }
+  *,*::before,*::after { cursor: auto !important; }
+  .tech-card:hover, .lt-card:hover, .btn:hover, .socials a:hover { transform: none !important; }
+}
+
+:root{
+  --bg:#060f1e;--accent:#7c83ff;--aqua:#55d4ff;
+  --text:#e5e7eb;--muted:rgba(229,231,235,.7);
+  --card:rgba(255,255,255,.035);--border:rgba(255,255,255,.08);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Plus Jakarta Sans","Poppins",sans-serif;overflow-x:hidden;cursor:none}
+a{text-decoration:none;color:inherit}
+.container{width:min(1160px,92%);margin:auto}
+
+/* ✨ Canvas FX */
+#fx-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;display:block}
+
+/* ✨ Custom cursor BINTANG */
+#cur{position:fixed;width:28px;height:28px;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:transform .1s ease;filter:drop-shadow(0 0 8px rgba(135,221,255,.8))}
+#cur svg{width:100%;height:100%;transition:transform .15s ease}
+#cur.active{transform:translate(-50%,-50%) scale(0.85)}
+#cur svg.star-fill{filter:drop-shadow(0 0 12px rgba(135,221,255,1)) drop-shadow(0 0 24px rgba(85,212,255,.6))}
+
+/* ✨ Header */
+.site-header{position:sticky;top:0;z-index:500;background:rgba(6,15,30,.85);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06)}
+.header-wrap{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:15px}
+.logo{font-family:"Poppins";font-weight:900;font-size:20px;white-space:nowrap}
+.logo span{color:var(--accent)}
+
+/* Nav */
+.nav{display:flex;gap:4px}
+.nav a{font-size:13.5px;font-weight:600;padding:9px 15px;border-radius:12px;opacity:.72;transition:.2s;border:1px solid transparent}
+.nav a:hover,.nav a.active{opacity:1;background:rgba(124,131,255,.13);border-color:rgba(124,131,255,.3)}
+
+/* ✨ Social Icons di Header (ICON ONLY) */
+.header-socials{display:flex;gap:8px;align-items:center}
+.header-socials a{
+  width:36px;height:36px;border-radius:10px;
+  display:grid;place-items:center;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.03);
+  color:var(--muted);font-size:14px;
+  transition:.2s ease;
+  position:relative;overflow:hidden
+}
+.header-socials a::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 30%,rgba(124,131,255,.25),transparent 60%);
+  opacity:0;transition:.2s
+}
+.header-socials a:hover::before{opacity:1}
+.header-socials a:hover{
+  color:#fff;border-color:rgba(124,131,255,.45);
+  transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.25)
+}
+.header-socials a.linkedin:hover{color:#0a66c2;border-color:rgba(10,102,194,.4)}
+.header-socials a.github:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.header-socials a.instagram:hover{color:#e1306c;border-color:rgba(225,48,108,.4)}
+.header-socials a.tiktok:hover{color:#69c9d0;border-color:rgba(105,201,208,.4)}
+.header-socials a.youtube:hover{color:#ff3333;border-color:rgba(255,0,0,.4)}
+.header-socials a.discord:hover{color:#5865f2;border-color:rgba(88,101,242,.4)}
+.header-socials a.whatsapp:hover{color:#25d366;border-color:rgba(37,211,102,.4)}
+.header-socials a.email:hover{color:var(--accent);border-color:rgba(124,131,255,.5)}
+
+/* ✨ Content layers */
+.page{position:relative;z-index:1}
+.site-footer{position:relative;z-index:1}
+
+.section{padding:80px 0}
+.sec-title{font-family:"Poppins";font-size:36px;font-weight:900;margin-bottom:12px}
+.sec-title.c{text-align:center}
+.sec-sub{color:var(--muted);margin-bottom:24px}
+.sec-sub.c{text-align:center}
+
+.fade-in{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.fade-in.visible{opacity:1;transform:none}
+
+#home{min-height:calc(100vh - 58px);display:flex;align-items:center;padding:60px 0 40px}
+.hero-wrap{display:grid;grid-template-columns:1fr 1.3fr;gap:52px;align-items:center}
+.profile-ring{width:340px;height:340px;border-radius:50%;margin:auto;border:5px solid rgba(124,131,255,.28);box-shadow:0 0 0 14px rgba(124,131,255,.06),0 0 60px rgba(124,131,255,.12);overflow:hidden;display:grid;place-items:center}
+.profile-img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.hero-title{font-family:"Poppins";font-size:50px;line-height:1.06;font-weight:900}
+.hero-name{color:var(--accent);animation:nameglow 3s ease-in-out infinite}
+@keyframes nameglow{0%,100%{text-shadow:0 0 18px rgba(124,131,255,.2)}50%{text-shadow:0 0 40px rgba(124,131,255,.45)}}
+.wave{display:inline-block;margin-left:5px;animation:wv 1.5s ease-in-out infinite;transform-origin:70% 70%}
+@keyframes wv{0%,100%{transform:rotate(0)}20%{transform:rotate(20deg)}40%{transform:rotate(-10deg)}60%{transform:rotate(16deg)}80%{transform:rotate(-5deg)}}
+.typed-wrap{margin-top:14px;font-size:21px;font-weight:800;color:#cbd5e1;min-height:32px}
+.typed-cur{color:var(--accent);animation:blink .75s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-desc{margin-top:16px;color:var(--muted);line-height:1.8;max-width:600px}
+.email-row{margin-top:20px;display:flex;align-items:center;gap:10px;color:var(--muted)}
+.copy-btn{width:38px;height:38px;border-radius:11px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.05);color:#fff;transition:.2s;font-size:14px}
+.copy-btn:hover{border-color:rgba(124,131,255,.4);transform:translateY(-2px)}
+
+/* Socials di Hero (opsional, bisa dihapus jika mau hanya di header) */
+.socials{margin-top:16px;display:flex;gap:10px}
+.socials a{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;border:1px solid var(--border);background:rgba(255,255,255,.03);font-size:15px;transition:.2s}
+.socials a:hover{border-color:rgba(124,131,255,.38);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.3)}
+
+.btns{margin-top:24px;display:flex;gap:13px;flex-wrap:wrap}
+.btn{padding:12px 22px;border-radius:13px;font-weight:800;font-size:14px;transition:.25s}
+.btn-pri{background:var(--accent);color:#060f1e;box-shadow:0 14px 36px rgba(124,131,255,.22)}
+.btn-pri:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(124,131,255,.32)}
+.btn-out{border:1px solid rgba(124,131,255,.4);color:var(--text)}
+.btn-out:hover{background:rgba(124,131,255,.1);transform:translateY(-2px)}
+
+.div-line{height:1px;max-width:500px;margin:0 auto;background:linear-gradient(90deg,transparent,rgba(85,212,255,.22),transparent);border:none}
+
+.prog-box{margin:20px 0}
+.prog-row{display:flex;justify-content:space-between;color:var(--muted);margin-bottom:9px;font-size:14px;font-weight:600}
+.prog-bar{height:12px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden}
+.prog-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--aqua));box-shadow:0 0 16px rgba(124,131,255,.18);width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+
+.tech-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0 32px}
+.tab{padding:9px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted);font-weight:700;font-size:13px;transition:.2s}
+.tab:hover{border-color:rgba(124,131,255,.35);transform:translateY(-1px)}
+.tab.active{background:rgba(124,131,255,.16);border-color:rgba(124,131,255,.42);color:#fff}
+.tech-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.tech-card{height:130px;border-radius:16px;border:1px solid var(--border);background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:.25s;position:relative;overflow:hidden}
+.tech-card::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0,rgba(124,131,255,.13),transparent 65%);opacity:0;transition:.25s}
+.tech-card:hover::after{opacity:1}
+.tech-card:hover{transform:translateY(-5px);border-color:rgba(124,131,255,.35);box-shadow:0 16px 44px rgba(0,0,0,.35)}
+.tech-card img{width:42px;height:42px;z-index:1;object-fit:contain}
+.tech-card i{font-size:32px;z-index:1;color:rgba(124,131,255,.9)}
+.tech-card h4{font-size:13px;font-weight:800;color:rgba(229,231,235,.88);z-index:1}
+.tech-card.hidden{display:none}
+
+/* ✨ LINKTREE CARDS (Icon + Nama + Deskripsi) */
+.lt-wrap{max-width:520px;margin:8px auto 0;display:flex;flex-direction:column;gap:12px}
+.lt-card{
+  display:flex;align-items:center;gap:15px;
+  padding:17px 22px;border-radius:17px;
+  border:1px solid var(--border);background:var(--card);
+  transition:.28s;position:relative;overflow:hidden;
+  text-decoration:none;color:inherit
+}
+.lt-card::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,rgba(124,131,255,.07),transparent 55%);
+  opacity:0;transition:.3s
+}
+.lt-card:hover::before{opacity:1}
+.lt-card:hover{
+  transform:translateY(-3px) scale(1.012);
+  border-color:rgba(124,131,255,.38);
+  box-shadow:0 14px 40px rgba(0,0,0,.38),0 0 18px rgba(124,131,255,.1)
+}
+.lt-ico{
+  width:44px;height:44px;border-radius:13px;
+  display:grid;place-items:center;font-size:19px;
+  flex-shrink:0;transition:.25s
+}
+.lt-card:hover .lt-ico{transform:scale(1.1) rotate(-4deg)}
+.lt-txt{flex:1}
+.lt-txt strong{display:block;font-weight:800;font-size:14.5px}
+.lt-txt span{font-size:12.5px;color:var(--muted)}
+.lt-arr{opacity:.35;font-size:12px;transition:.25s}
+.lt-card:hover .lt-arr{opacity:1;transform:translateX(4px);color:var(--accent)}
+
+/* Warna icon per platform */
+.lt-github  .lt-ico{background:rgba(255,255,255,.07);color:#fff}
+.lt-linkedin .lt-ico{background:rgba(10,102,194,.16);color:#0a66c2}
+.lt-ig      .lt-ico{background:rgba(225,48,108,.13);color:#e1306c}
+.lt-tiktok  .lt-ico{background:rgba(105,201,208,.13);color:#69c9d0}
+.lt-youtube .lt-ico{background:rgba(255,0,0,.12);color:#ff3333}
+.lt-discord .lt-ico{background:rgba(88,101,242,.14);color:#5865f2}
+.lt-wa      .lt-ico{background:rgba(37,211,102,.12);color:#25d366}
+.lt-email   .lt-ico{background:rgba(124,131,255,.14);color:var(--accent)}
+
+.site-footer{padding:32px 0;text-align:center;border-top:1px solid rgba(255,255,255,.05);color:var(--muted);font-size:14px}
+.footer-sub{font-size:12px;opacity:.6;margin-top:5px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1050px){.tech-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:860px){
+  .hero-wrap{grid-template-columns:1fr;text-align:center}
+  .profile-ring{width:230px;height:230px}
+  .hero-title{font-size:38px}
+  .email-row,.socials,.btns{justify-content:center}
+  .tech-grid{grid-template-columns:repeat(3,1fr)}
+  .header-wrap{flex-wrap:wrap}
+  .header-socials{order:3;width:100%;justify-content:center;margin-top:10px}
+}
+@media(max-width:600px){
+  .tech-grid{grid-template-columns:repeat(2,1fr)}
+  .nav a{padding:8px 10px;font-size:12px}
+  .btn, .tab, .socials a, .lt-card, .copy-btn, .header-socials a { min-height:44px; display:inline-flex; align-items:center; justify-content:center; }
+  .hero-title { font-size:32px; }
+  .sec-title { font-size:28px; }
+  .typed-wrap { font-size:18px; }
+  .header-socials a { width:40px; height:40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ✨ Canvas FX -->
+<canvas id="fx-canvas"></canvas>
+
+<!-- ✨ Custom cursor BINTANG -->
+<div id="cur">
+  <svg class="star-fill" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#87ddff;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#55d4ff;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#7c83ff;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+    <polygon points="20,2 25.2,14 38,14 28,22 32,36 20,27 8,36 12,22 2,14 14.8,14"
+      fill="url(#starGrad)" stroke="#a0e8ff" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>
+</div>
+
+<header class="site-header">
+  <div class="container header-wrap">
+    <a class="logo" href="#home">nahara<span>.</span>dev</a>
+    
+    <nav class="nav">
+      <a href="#home" class="active">Home</a>
+      <a href="#proficiency">Proficiency</a>
+      <a href="#tech">Tech</a>
+      <a href="#linktree">Links</a>
+    </nav>
+    
+    <!-- ✨ SOCIAL ICONS DI HEADER (ICON ONLY) -->
+    <div class="header-socials">
+      <a class="linkedin" href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a class="github" href="https://github.com/" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a class="instagram" href="https://instagram.com/mh.nharaa" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a class="tiktok" href="https://tiktok.com/" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      <a class="youtube" href="https://youtube.com/" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      <a class="discord" href="https://discord.gg/" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
+      <a class="whatsapp" href="https://wa.me/62xxxxxxxxxx" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      <a class="email" href="mailto:m.naharalduha@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+<section id="home">
+  <div class="container hero-wrap">
+    <div class="fade-in">
+      <div class="profile-ring">
+        <img src="https://i.ibb.co.com/yFMz7Txs/grok-image-fbf45860-ea5b-4125-8aa1-5af60e076eaa3.png" alt="Muhamad Nahara Alduha" class="profile-img">
+      </div>
+    </div>
+    <div class="fade-in" style="transition-delay:.15s">
+      <h1 class="hero-title">
+        Greetings! I'm<br>
+        <span class="hero-name">Muhamad Nahara Alduha</span>
+        <span class="wave">👋</span>
+      </h1>
+      <div class="typed-wrap"><span id="typed-out"></span><span class="typed-cur">|</span></div>
+      <p class="hero-desc">Saya Web Developer dan IT Support. Bisa membangun website modern, mengelola database, perbaikan OS, optimasi performa, serta upgrade hardware untuk laptop/PC.</p>
+      <div class="email-row">
+        <span>m.naharalduha@gmail.com</span>
+        <button class="copy-btn" id="copyEmail"><i class="fa-regular fa-copy"></i></button>
+      </div>
+      <div class="btns">
+        <a class="btn btn-pri" href="#linktree">My Links</a>
+        <a class="btn btn-out" href="#">View CV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div-line">
+
+<section id="proficiency" class="section">
+  <div class="container">
+    <h2 class="sec-title fade-in">Proficiency</h2>
+    <div class="prog-box fade-in" style="transition-delay:.05s">
+      <div class="prog-row"><span>Android Opreker</span><span>70%</span></div>
+      <div class="prog-bar"><div class="prog-fill" data-w="70"></div></div>
+    </div>
+    <div class="prog-box fade-in" style="transition-delay:.1s">
+      <div class="prog-row"><span>IT Support</span><span>55%</span></div>
+      <div class="prog-bar"><div class="prog-fill" data-w="55"></div></div>
+    </div>
+    <div class="prog-box fade-in" style="transition-delay:.15s">
+      <div class="prog-row"><span>AI-Prompt Engineer</span><span>45%</span></div>
+      <div class="prog-bar"><div class="prog-fill" data-w="45"></div></div>
+    </div>
+    <div class="prog-box fade-in" style="transition-delay:.2s">
+      <div class="prog-row"><span>Android Editing Skill</span><span>55%</span></div>
+      <div class="prog-bar"><div class="prog-fill" data-w="55"></div></div>
+    </div>
+    <div class="prog-box fade-in" style="transition-delay:.25s">
+      <div class="prog-row"><span>Fullstack Developer</span><span>20%</span></div>
+      <div class="prog-bar"><div class="prog-fill" data-w="20"></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="div-line">
+
+<section id="tech" class="section">
+  <div class="container">
+    <h2 class="sec-title c fade-in">My Tech Warehouse</h2>
+    <p class="sec-sub c fade-in">Pernah main dimana aja?</p>
+    <div class="tech-tabs fade-in">
+      <button class="tab active" data-f="all">All</button>
+      <button class="tab" data-f="game">Game Dev</button>
+      <button class="tab" data-f="web">Web Dev</button>
+      <button class="tab" data-f="lang">Languages</button>
+      <button class="tab" data-f="tools">Tools</button>
+      <button class="tab" data-f="it">IT Support</button>
+    </div>
+    <div class="tech-grid fade-in">
+      <div class="tech-card" data-c="game"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg" alt=""><h4>Unity</h4></div>
+      <div class="tech-card" data-c="game"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/blender/blender-original.svg" alt=""><h4>Blender</h4></div>
+      <div class="tech-card" data-c="game"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg" alt=""><h4>Godot</h4></div>
+      <div class="tech-card" data-c="game"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pygame/pygame-original.svg" alt=""><h4>Pygame</h4></div>
+      <div class="tech-card" data-c="web"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt=""><h4>HTML</h4></div>
+      <div class="tech-card" data-c="web"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt=""><h4>CSS</h4></div>
+      <div class="tech-card" data-c="web"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt=""><h4>JavaScript</h4></div>
+      <div class="tech-card" data-c="web"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt=""><h4>PHP</h4></div>
+      <div class="tech-card" data-c="web"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt=""><h4>MySQL</h4></div>
+      <div class="tech-card" data-c="web"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg" alt=""><h4>WordPress</h4></div>
+      <div class="tech-card" data-c="web"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt=""><h4>Bootstrap</h4></div>
+      <div class="tech-card" data-c="web"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt=""><h4>Tailwind</h4></div>
+      <div class="tech-card" data-c="lang"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt=""><h4>Python</h4></div>
+      <div class="tech-card" data-c="lang"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt=""><h4>Java</h4></div>
+      <div class="tech-card" data-c="lang"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt=""><h4>C++</h4></div>
+      <div class="tech-card" data-c="lang"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt=""><h4>C</h4></div>
+      <div class="tech-card" data-c="lang"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt=""><h4>TypeScript</h4></div>
+      <div class="tech-card" data-c="tools"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt=""><h4>Git</h4></div>
+      <div class="tech-card" data-c="tools"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt=""><h4>GitHub</h4></div>
+      <div class="tech-card" data-c="tools"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt=""><h4>VS Code</h4></div>
+      <div class="tech-card" data-c="tools"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt=""><h4>Figma</h4></div>
+      <div class="tech-card" data-c="tools"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/notion/notion-original.svg" alt=""><h4>Notion</h4></div>
+      <div class="tech-card" data-c="tools"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt=""><h4>Linux</h4></div>
+      <div class="tech-card" data-c="tools"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg" alt=""><h4>Windows</h4></div>
+      <div class="tech-card" data-c="it"><i class="fa-solid fa-desktop"></i><h4>Install OS</h4></div>
+      <div class="tech-card" data-c="it"><i class="fa-solid fa-laptop"></i><h4>Dual Boot</h4></div>
+      <div class="tech-card" data-c="it"><i class="fa-solid fa-screwdriver-wrench"></i><h4>Fix Booting</h4></div>
+      <div class="tech-card" data-c="it"><i class="fa-solid fa-gauge-high"></i><h4>Optimize</h4></div>
+      <div class="tech-card" data-c="it"><i class="fa-solid fa-microchip"></i><h4>Hardware Upgrade</h4></div>
+      <div class="tech-card" data-c="it"><i class="fa-solid fa-shield-halved"></i><h4>Security Setup</h4></div>
+    </div>
+  </div>
+</section>
+
+<hr class="div-line">
+
+<section id="linktree" class="section">
+  <div class="container">
+    <h2 class="sec-title c fade-in">Find Me On</h2>
+    <p class="sec-sub c fade-in">Semua link penting ada di sini.</p>
+    
+    <!-- ✨ LINKTREE CARDS: ICON + NAMA + DESKRIPSI -->
+    <div class="lt-wrap">
+      <a class="lt-card lt-github fade-in" href="https://github.com/" target="_blank" style="transition-delay:.05s">
+        <div class="lt-ico"><i class="fa-brands fa-github"></i></div>
+        <div class="lt-txt"><strong>GitHub</strong><span>Lihat repo & project saya</span></div>
+        <i class="fa-solid fa-arrow-right lt-arr"></i>
+      </a>
+      <a class="lt-card lt-linkedin fade-in" href="https://linkedin.com" target="_blank" style="transition-delay:.08s">
+        <div class="lt-ico"><i class="fa-brands fa-linkedin-in"></i></div>
+        <div class="lt-txt"><strong>LinkedIn</strong><span>Muhamad Nahara Alduha</span></div>
+        <i class="fa-solid fa-arrow-right lt-arr"></i>
+      </a>
+      <a class="lt-card lt-ig fade-in" href="https://instagram.com/mh.nharaa" target="_blank" style="transition-delay:.11s">
+        <div class="lt-ico"><i class="fa-brands fa-instagram"></i></div>
+        <div class="lt-txt"><strong>Instagram</strong><span>@mh.nharaa</span></div>
+        <i class="fa-solid fa-arrow-right lt-arr"></i>
+      </a>
+      <a class="lt-card lt-tiktok fade-in" href="https://tiktok.com/" target="_blank" style="transition-delay:.14s">
+        <div class="lt-ico"><i class="fa-brands fa-tiktok"></i></div>
+        <div class="lt-txt"><strong>TikTok</strong><span>Konten dev & IT tips</span></div>
+        <i class="fa-solid fa-arrow-right lt-arr"></i>
+      </a>
+      <a class="lt-card lt-youtube fade-in" href="https://youtube.com/" target="_blank" style="transition-delay:.17s">
+        <div class="lt-ico"><i class="fa-brands fa-youtube"></i></div>
+        <div class="lt-txt"><strong>YouTube</strong><span>Tutorial & project showcase</span></div>
+        <i class="fa-solid fa-arrow-right lt-arr"></i>
+      </a>
+      <a class="lt-card lt-discord fade-in" href="https://discord.gg/" target="_blank" style="transition-delay:.2s">
+        <div class="lt-ico"><i class="fa-brands fa-discord"></i></div>
+        <div class="lt-txt"><strong>Discord</strong><span>nahara#0000 — chat & collab</span></div>
+        <i class="fa-solid fa-arrow-right lt-arr"></i>
+      </a>
+      <a class="lt-card lt-wa fade-in" href="https://wa.me/62xxxxxxxxxx" target="_blank" style="transition-delay:.23s">
+        <div class="lt-ico"><i class="fa-brands fa-whatsapp"></i></div>
+        <div class="lt-txt"><strong>WhatsApp</strong><span>Chat untuk kerja sama</span></div>
+        <i class="fa-solid fa-arrow-right lt-arr"></i>
+      </a>
+      <a class="lt-card lt-email fade-in" href="mailto:m.naharalduha@gmail.com" style="transition-delay:.26s">
+        <div class="lt-ico"><i class="fa-solid fa-envelope"></i></div>
+        <div class="lt-txt"><strong>Email</strong><span>m.naharalduha@gmail.com</span></div>
+        <i class="fa-solid fa-arrow-right lt-arr"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="site-footer">
+  <p>© <span id="yr"></span> Muhamad Nahara Alduha — All rights reserved.</p>
+  <p class="footer-sub">Fullstack Developer • IT Support • Hardware Specialist</p>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* ── DETECT TOUCH DEVICE ── */
+const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
+/* ── CURSOR TRACKING ── */
+const cur = document.getElementById('cur');
+const cursorPos = { x: window.innerWidth/2, y: window.innerHeight/2 };
+
+document.addEventListener('mousemove', e => {
+  if (!isTouchDevice && cur) {
+    cursorPos.x = e.clientX;
+    cursorPos.y = e.clientY;
+    cur.style.left = e.clientX + 'px';
+    cur.style.top = e.clientY + 'px';
+  }
+});
+
+/* ── CANVAS FX ── */
+const cv = document.getElementById('fx-canvas');
+const cx = cv.getContext('2d');
+
+function rsz() {
+  if (!cv) return;
+  cv.width = window.innerWidth;
+  cv.height = window.innerHeight;
+}
+rsz();
+window.addEventListener('resize', rsz);
+
+const trailPoints = [];
+const MAX_TRAIL_LENGTH = 25;
+const TRAIL_BASE_SIZE = 14;
+const TRAIL_FADE_SPEED = 0.035;
+
+let ripples = [], rStars = [], tStars = [];
+let isDragging = false;
+
+function starPath(x, y, r, rot) {
+  const sp = 5, inn = r * 0.42;
+  cx.beginPath();
+  for (let i = 0; i < sp * 2; i++) {
+    const a = (i * Math.PI / sp) + rot - Math.PI / 2;
+    const d = i % 2 === 0 ? r : inn;
+    i === 0 ? cx.moveTo(x + Math.cos(a) * d, y + Math.sin(a) * d)
+            : cx.lineTo(x + Math.cos(a) * d, y + Math.sin(a) * d);
+  }
+  cx.closePath();
+}
+
+document.addEventListener('mousedown', e => {
+  if (isTouchDevice || !cv) return;
+  const { clientX: x, clientY: y } = e;
+  isDragging = true;
+  if (cur) cur.classList.add('active');
+  
+  ripples.push({ x, y, r: 0, targetR: 28, a: 1, phase: 'fill' });
+  
+  [45, 135, 225, 315].forEach(deg => {
+    const rad = deg * Math.PI / 180;
+    rStars.push({
+      x, y,
+      vx: Math.cos(rad) * (1.8 + Math.random() * 0.9),
+      vy: Math.sin(rad) * (1.8 + Math.random() * 0.9),
+      r: 4 + Math.random() * 2,
+      a: 0.95,
+      rot: Math.random() * Math.PI * 2,
+      rs: (Math.random() > 0.5 ? 1 : -1) * (0.08 + Math.random() * 0.1)
+    });
+  });
+});
+
+document.addEventListener('mouseup', () => {
+  if (isTouchDevice || !cur) return;
+  isDragging = false;
+  cur.classList.remove('active');
+});
+
+function loop() {
+  try {
+    if (!cx || !cv) return;
+    cx.clearRect(0, 0, cv.width, cv.height);
+    
+    // 🐍 SNAKE TRAIL
+    if (!isTouchDevice) {
+      trailPoints.unshift({ x: cursorPos.x, y: cursorPos.y, age: 0, size: TRAIL_BASE_SIZE });
+      if (trailPoints.length > MAX_TRAIL_LENGTH) trailPoints.pop();
+      
+      trailPoints.forEach((pt, i) => {
+        pt.age += TRAIL_FADE_SPEED;
+        const sizeRatio = Math.max(0.15, 1 - (i / MAX_TRAIL_LENGTH) * 1.1);
+        pt.currentSize = TRAIL_BASE_SIZE * sizeRatio;
+        pt.alpha = Math.max(0, 1 - pt.age * 1.8);
+      });
+      
+      if (trailPoints.length > 2) {
+        cx.save();
+        cx.lineCap = 'round'; cx.lineJoin = 'round';
+        
+        for (let layer = 2; layer >= 0; layer--) {
+          cx.beginPath();
+          cx.moveTo(trailPoints[0].x, trailPoints[0].y);
+          
+          for (let i = 1; i < trailPoints.length - 1; i++) {
+            const xc = (trailPoints[i].x + trailPoints[i + 1].x) / 2;
+            const yc = (trailPoints[i].y + trailPoints[i + 1].y) / 2;
+            cx.quadraticCurveTo(trailPoints[i].x, trailPoints[i].y, xc, yc);
+          }
+          const last = trailPoints[trailPoints.length - 1];
+          cx.lineTo(last.x, last.y);
+          
+          const glowMultipliers = [2.5, 1.5, 1];
+          const alphaMultipliers = [0.15, 0.35, 0.85];
+          
+          cx.shadowBlur = 15 * glowMultipliers[layer];
+          cx.shadowColor = `rgba(85, 212, 255, ${0.6 * alphaMultipliers[layer]})`;
+          
+          const gradient = cx.createLinearGradient(
+            trailPoints[0].x, trailPoints[0].y,
+            trailPoints[trailPoints.length-1].x, trailPoints[trailPoints.length-1].y
+          );
+          gradient.addColorStop(0, `rgba(135, 221, 255, ${0.9 * alphaMultipliers[layer]})`);
+          gradient.addColorStop(0.5, `rgba(85, 212, 255, ${0.7 * alphaMultipliers[layer]})`);
+          gradient.addColorStop(1, `rgba(124, 131, 255, ${0.3 * alphaMultipliers[layer]})`);
+          
+          cx.strokeStyle = gradient;
+          
+          for (let i = 0; i < trailPoints.length - 1; i++) {
+            const pt = trailPoints[i];
+            const nextPt = trailPoints[i + 1];
+            const progress = i / trailPoints.length;
+            const width = pt.currentSize * glowMultipliers[layer] * (1 - progress * 0.7);
+            
+            cx.beginPath();
+            cx.moveTo(pt.x, pt.y);
+            if (i < trailPoints.length - 2) {
+              const xc = (pt.x + nextPt.x) / 2;
+              const yc = (pt.y + nextPt.y) / 2;
+              cx.quadraticCurveTo(pt.x, pt.y, xc, yc);
+            } else {
+              cx.lineTo(nextPt.x, nextPt.y);
+            }
+            
+            cx.lineWidth = Math.max(0.5, width);
+            cx.globalAlpha = pt.alpha * alphaMultipliers[layer];
+            cx.stroke();
+          }
+        }
+        
+        if (Math.random() > 0.7 && trailPoints.length > 3) {
+          const randomIdx = Math.floor(Math.random() * Math.min(8, trailPoints.length));
+          const pt = trailPoints[randomIdx];
+          if (pt && pt.alpha > 0.3) {
+            cx.save();
+            cx.shadowColor = '#a0e8ff'; cx.shadowBlur = 8;
+            cx.fillStyle = `rgba(190, 240, 255, ${pt.alpha * 0.8})`;
+            starPath(pt.x + (Math.random()-0.5)*4, pt.y + (Math.random()-0.5)*4, 1.5 + pt.currentSize*0.15, Math.random()*Math.PI*2);
+            cx.fill();
+            cx.restore();
+          }
+        }
+        cx.restore();
+      }
+    }
+    
+    // 💫 RIPPLE
+    ripples = ripples.filter(r => r.a > 0.005);
+    ripples.forEach(r => {
+      cx.save(); cx.shadowColor = '#55d4ff'; cx.lineCap = 'round';
+      if (r.phase === 'fill') {
+        r.r += (r.targetR - r.r) * 0.25; cx.shadowBlur = 18;
+        const g = cx.createRadialGradient(r.x, r.y, 0, r.x, r.y, r.r);
+        g.addColorStop(0, `rgba(110,190,255,${r.a * 0.75})`);
+        g.addColorStop(0.55, `rgba(85,160,255,${r.a * 0.55})`);
+        g.addColorStop(1, `rgba(160,230,255,${r.a * 0.12})`);
+        cx.beginPath(); cx.arc(r.x, r.y, r.r, 0, Math.PI * 2); cx.fillStyle = g; cx.fill();
+        cx.beginPath(); cx.arc(r.x, r.y, r.r, 0, Math.PI * 2);
+        cx.strokeStyle = `rgba(200,240,255,${r.a})`; cx.lineWidth = 2; cx.stroke();
+        if (r.r >= r.targetR * 0.93) { r.phase = 'outline'; r.outT = 0; }
+      } else if (r.phase === 'outline') {
+        r.outT++; const oa = Math.max(0, 1 - r.outT / 9);
+        if (oa > 0) {
+          const g = cx.createRadialGradient(r.x, r.y, 0, r.x, r.y, r.targetR);
+          g.addColorStop(0, `rgba(110,190,255,${oa * 0.5})`);
+          g.addColorStop(1, `rgba(160,230,255,0)`);
+          cx.beginPath(); cx.arc(r.x, r.y, r.targetR, 0, Math.PI * 2); cx.fillStyle = g; cx.fill();
+        }
+        cx.shadowBlur = 14;
+        cx.beginPath(); cx.arc(r.x, r.y, r.targetR, 0, Math.PI * 2);
+        cx.strokeStyle = `rgba(170,228,255,${Math.min(1, r.outT / 4)})`; cx.lineWidth = 2.2; cx.stroke();
+        if (r.outT >= 9) { r.phase = 'arc'; r.rot = 0; r.frags = [{ a0: -Math.PI * 0.375, len: Math.PI * 0.75, fa: 1 }, { a0: Math.PI * 0.625, len: Math.PI * 0.75, fa: 1 }]; }
+      } else if (r.phase === 'arc') {
+        r.rot += 0.035; cx.shadowBlur = 11; let alive = false;
+        r.frags.forEach(f => {
+          if (f.len <= 0.01 || f.fa <= 0.01) return; alive = true;
+          f.len = Math.max(0, f.len - 0.048); f.a0 += 0.024; f.fa -= 0.022;
+          const a0 = f.a0 + r.rot; cx.beginPath(); cx.arc(r.x, r.y, r.targetR, a0, a0 + f.len);
+          cx.strokeStyle = `rgba(140,220,255,${f.fa})`; cx.lineWidth = 2.2; cx.stroke();
+        }); if (!alive) r.a = 0;
+      } cx.restore();
+    });
+
+    // ⭐ CLICK STARS
+    rStars = rStars.filter(s => s.a > 0.01);
+    rStars.forEach(s => {
+      cx.save(); cx.translate(s.x, s.y); cx.rotate(s.rot); cx.shadowColor = '#87e8ff'; cx.shadowBlur = 6;
+      const sp = 5, outer = s.r, inner = s.r * 0.42; cx.beginPath();
+      for (let i = 0; i < sp * 2; i++) {
+        const ang = (i * Math.PI / sp) - Math.PI / 2; const d = i % 2 === 0 ? outer : inner;
+        i === 0 ? cx.moveTo(Math.cos(ang) * d, Math.sin(ang) * d) : cx.lineTo(Math.cos(ang) * d, Math.sin(ang) * d);
+      } cx.closePath(); cx.strokeStyle = `rgba(170,230,255,${s.a})`; cx.lineWidth = 1; cx.stroke(); cx.restore();
+      s.x += s.vx; s.y += s.vy; s.vy += 0.04; s.vx *= 0.97; s.vy *= 0.97; s.rot += s.rs; s.a -= 0.028;
+    });
+    rStars = rStars.filter(s => s.a > 0.01);
+    rStars.forEach(s => {
+      cx.save(); cx.shadowColor = '#87e8ff'; cx.shadowBlur = 8; cx.fillStyle = `rgba(160,230,255,${s.a})`;
+      starPath(s.x, s.y, s.r, s.rot); cx.fill(); cx.restore();
+      s.x += s.vx; s.y += s.vy; s.vy += 0.055; s.r *= 0.97; s.a -= 0.022; s.rot += s.rs;
+    });
+
+    if (isDragging && !isTouchDevice && Math.random() > 0.6) {
+      tStars.push({ x: cursorPos.x + (Math.random() - 0.5) * 12, y: cursorPos.y + (Math.random() - 0.5) * 12, vx: (Math.random() - 0.5) * 0.8, vy: (Math.random() - 0.5) * 0.8 - 0.3, r: 1.5 + Math.random() * 2, a: 0.9, rot: Math.random() * Math.PI * 2 });
+    }
+    tStars = tStars.filter(s => s.a > 0.008);
+    tStars.forEach(s => { cx.save(); cx.shadowColor = '#a0e8ff'; cx.shadowBlur = 5; cx.fillStyle = `rgba(190,238,255,${s.a})`; starPath(s.x, s.y, s.r, s.rot); cx.fill(); cx.restore(); s.x += s.vx; s.y += s.vy; s.a -= 0.038; s.rot += 0.02; });
+    
+  } catch (e) { console.warn('Canvas animation error:', e); }
+  requestAnimationFrame(loop);
+}
+
+if (!isTouchDevice && cv) { try { loop(); } catch (e) { console.warn('Failed to start canvas loop:', e); } }
+
+/* ── TYPED ── */
+(() => {
+  const el = document.getElementById('typed-out'); if (!el) return;
+  const words = ['Fullstack Developer', 'Prompt Engineer', 'IT Support', 'Software Hardware'];
+  let wi = 0, ci = 0, del = false;
+  function tick() { const w = words[wi]; if (!del) { el.textContent = w.slice(0, ++ci); if (ci === w.length) { del = true; setTimeout(tick, 1200); return; } } else { el.textContent = w.slice(0, --ci); if (ci === 0) { del = false; wi = (wi + 1) % words.length; setTimeout(tick, 400); return; } } setTimeout(tick, del ? 38 : 72); } tick();
+})();
+
+/* ── SCROLL FADE + PROGRESS ── */
+const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); e.target.querySelectorAll('.prog-fill').forEach(b => b.style.width = b.dataset.w + '%'); } }); }, { threshold: 0.12 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+/* ── TECH FILTER ── */
+document.querySelectorAll('.tab').forEach(t => { t.addEventListener('click', () => { document.querySelectorAll('.tab').forEach(x => x.classList.remove('active')); t.classList.add('active'); const f = t.dataset.f; document.querySelectorAll('.tech-card').forEach(c => c.classList.toggle('hidden', f !== 'all' && c.dataset.c !== f)); }); });
+
+/* ── COPY EMAIL ── */
+const copyBtn = document.getElementById('copyEmail'); if (copyBtn) { copyBtn.addEventListener('click', async () => { await navigator.clipboard.writeText('m.naharalduha@gmail.com'); copyBtn.innerHTML = '✅'; setTimeout(() => copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i>', 1300); }); }
+
+/* ── NAV ACTIVE ── */
+const secs = document.querySelectorAll('section[id]'); const nls = document.querySelectorAll('.nav a');
+window.addEventListener('scroll', () => { let active = ''; secs.forEach(s => { if (scrollY >= s.offsetTop - 130) active = s.id; }); nls.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active)); }, { passive: true });
+</script>
+</body>
+</html>
