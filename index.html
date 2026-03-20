@@ -46,7 +46,7 @@ a{text-decoration:none;color:inherit}
 .nav a{font-size:13.5px;font-weight:600;padding:9px 15px;border-radius:12px;opacity:.72;transition:.2s;border:1px solid transparent}
 .nav a:hover,.nav a.active{opacity:1;background:rgba(124,131,255,.13);border-color:rgba(124,131,255,.3)}
 
-/* ✨ Social Icons di Header (ICON ONLY) */
+/* ✨ Social Icons di Header */
 .header-socials{display:flex;gap:8px;align-items:center}
 .header-socials a{
   width:36px;height:36px;border-radius:10px;
@@ -106,7 +106,7 @@ a{text-decoration:none;color:inherit}
 .copy-btn{width:38px;height:38px;border-radius:11px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.05);color:#fff;transition:.2s;font-size:14px}
 .copy-btn:hover{border-color:rgba(124,131,255,.4);transform:translateY(-2px)}
 
-/* Socials di Hero (opsional, bisa dihapus jika mau hanya di header) */
+/* Socials di Hero */
 .socials{margin-top:16px;display:flex;gap:10px}
 .socials a{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;border:1px solid var(--border);background:rgba(255,255,255,.03);font-size:15px;transition:.2s}
 .socials a:hover{border-color:rgba(124,131,255,.38);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.3)}
@@ -139,7 +139,7 @@ a{text-decoration:none;color:inherit}
 .tech-card h4{font-size:13px;font-weight:800;color:rgba(229,231,235,.88);z-index:1}
 .tech-card.hidden{display:none}
 
-/* ✨ LINKTREE CARDS (Icon + Nama + Deskripsi) */
+/* ✨ LINKTREE CARDS */
 .lt-wrap{max-width:520px;margin:8px auto 0;display:flex;flex-direction:column;gap:12px}
 .lt-card{
   display:flex;align-items:center;gap:15px;
@@ -171,15 +171,9 @@ a{text-decoration:none;color:inherit}
 .lt-arr{opacity:.35;font-size:12px;transition:.25s}
 .lt-card:hover .lt-arr{opacity:1;transform:translateX(4px);color:var(--accent)}
 
-/* Warna icon per platform */
-.lt-github  .lt-ico{background:rgba(255,255,255,.07);color:#fff}
-.lt-linkedin .lt-ico{background:rgba(10,102,194,.16);color:#0a66c2}
-.lt-ig      .lt-ico{background:rgba(225,48,108,.13);color:#e1306c}
-.lt-tiktok  .lt-ico{background:rgba(105,201,208,.13);color:#69c9d0}
-.lt-youtube .lt-ico{background:rgba(255,0,0,.12);color:#ff3333}
-.lt-discord .lt-ico{background:rgba(88,101,242,.14);color:#5865f2}
-.lt-wa      .lt-ico{background:rgba(37,211,102,.12);color:#25d366}
-.lt-email   .lt-ico{background:rgba(124,131,255,.14);color:var(--accent)}
+/* ✨ Warna icon untuk link generic & download di linktree */
+.lt-link   .lt-ico{background:rgba(124,131,255,.14);color:var(--accent)}
+.lt-download .lt-ico{background:rgba(85,212,255,.14);color:var(--aqua)}
 
 .site-footer{padding:32px 0;text-align:center;border-top:1px solid rgba(255,255,255,.05);color:var(--muted);font-size:14px}
 .footer-sub{font-size:12px;opacity:.6;margin-top:5px}
@@ -237,16 +231,13 @@ a{text-decoration:none;color:inherit}
       <a href="#linktree">Links</a>
     </nav>
     
-    <!-- ✨ SOCIAL ICONS DI HEADER (ICON ONLY) -->
+    <!-- ✨ SOCIAL ICONS DI HEADER (tetap seperti semula) -->
     <div class="header-socials">
-      <a class="linkedin" href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-      <a class="github" href="https://github.com/" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-      <a class="instagram" href="https://instagram.com/mh.nharaa" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-      <a class="tiktok" href="https://tiktok.com/" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-      <a class="youtube" href="https://youtube.com/" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-      <a class="discord" href="https://discord.gg/" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
-      <a class="whatsapp" href="https://wa.me/62xxxxxxxxxx" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-      <a class="email" href="mailto:m.naharalduha@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+      <a class="github" href="https://github.com/fmyko" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a class="instagram" href="https://instagram.com/@fymyko" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a class="tiktok" href="https://tiktok.com/@fmyko" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      <a class="youtube" href="https://youtube.com/@fymyko" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      <a class="email" href="mailto:fmykoemail@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
     </div>
   </div>
 </header>
@@ -361,49 +352,42 @@ a{text-decoration:none;color:inherit}
 
 <section id="linktree" class="section">
   <div class="container">
-    <h2 class="sec-title c fade-in">Find Me On</h2>
+    <h2 class="sec-title c fade-in">Myko ShareLink to You!</h2>
     <p class="sec-sub c fade-in">Semua link penting ada di sini.</p>
     
-    <!-- ✨ LINKTREE CARDS: ICON + NAMA + DESKRIPSI -->
+    <!-- ✨ LINKTREE CARDS: 3 LINK GENERIC + 3 DOWNLOAD -->
     <div class="lt-wrap">
-      <a class="lt-card lt-github fade-in" href="https://github.com/" target="_blank" style="transition-delay:.05s">
-        <div class="lt-ico"><i class="fa-brands fa-github"></i></div>
-        <div class="lt-txt"><strong>GitHub</strong><span>Lihat repo & project saya</span></div>
+      <!-- 🔗 3 Card Tautan Generic -->
+      <a class="lt-card lt-link fade-in" href="https://t.me/mykoshare" target="_blank" style="transition-delay:.05s">
+        <div class="lt-ico"><i class="fa-solid fa-link"></i></div>
+        <div class="lt-txt"><strong>Boot Animation</strong><span>Boot Animasi Terbaru disini</span></div>
         <i class="fa-solid fa-arrow-right lt-arr"></i>
       </a>
-      <a class="lt-card lt-linkedin fade-in" href="https://linkedin.com" target="_blank" style="transition-delay:.08s">
-        <div class="lt-ico"><i class="fa-brands fa-linkedin-in"></i></div>
-        <div class="lt-txt"><strong>LinkedIn</strong><span>Muhamad Nahara Alduha</span></div>
+      <a class="lt-card lt-link fade-in" href="https://t.me/lhmodshare/" target="_blank" style="transition-delay:.08s">
+        <div class="lt-ico"><i class="fa-solid fa-link"></i></div>
+        <div class="lt-txt"><strong>GPU Driver Recommended</strong><span>Adreno GPU Driver Recommended</span></div>
         <i class="fa-solid fa-arrow-right lt-arr"></i>
       </a>
-      <a class="lt-card lt-ig fade-in" href="https://instagram.com/mh.nharaa" target="_blank" style="transition-delay:.11s">
-        <div class="lt-ico"><i class="fa-brands fa-instagram"></i></div>
-        <div class="lt-txt"><strong>Instagram</strong><span>@mh.nharaa</span></div>
+      <a class="lt-card lt-link fade-in" href="https://t.me/PocoX3ProUpdates/2068" target="_blank" style="transition-delay:.11s">
+        <div class="lt-ico"><i class="fa-solid fa-link"></i></div>
+        <div class="lt-txt"><strong>HyperOS Pure</strong><span>ROM For Poco X3 Pro Stable</span></div>
         <i class="fa-solid fa-arrow-right lt-arr"></i>
       </a>
-      <a class="lt-card lt-tiktok fade-in" href="https://tiktok.com/" target="_blank" style="transition-delay:.14s">
-        <div class="lt-ico"><i class="fa-brands fa-tiktok"></i></div>
-        <div class="lt-txt"><strong>TikTok</strong><span>Konten dev & IT tips</span></div>
+      
+      <!-- 📥 3 Card Download -->
+      <a class="lt-card lt-download fade-in" href="/assets/cv-nahara.pdf" target="_blank" style="transition-delay:.14s">
+        <div class="lt-ico"><i class="fa-solid fa-download"></i></div>
+        <div class="lt-txt"><strong>Download CV</strong><span>PDF • 150 KB</span></div>
         <i class="fa-solid fa-arrow-right lt-arr"></i>
       </a>
-      <a class="lt-card lt-youtube fade-in" href="https://youtube.com/" target="_blank" style="transition-delay:.17s">
-        <div class="lt-ico"><i class="fa-brands fa-youtube"></i></div>
-        <div class="lt-txt"><strong>YouTube</strong><span>Tutorial & project showcase</span></div>
+      <a class="lt-card lt-download fade-in" href="/assets/portfolio-nahara.zip" target="_blank" style="transition-delay:.17s">
+        <div class="lt-ico"><i class="fa-solid fa-download"></i></div>
+        <div class="lt-txt"><strong>Download Portfolio</strong><span>ZIP • 2.4 MB</span></div>
         <i class="fa-solid fa-arrow-right lt-arr"></i>
       </a>
-      <a class="lt-card lt-discord fade-in" href="https://discord.gg/" target="_blank" style="transition-delay:.2s">
-        <div class="lt-ico"><i class="fa-brands fa-discord"></i></div>
-        <div class="lt-txt"><strong>Discord</strong><span>nahara#0000 — chat & collab</span></div>
-        <i class="fa-solid fa-arrow-right lt-arr"></i>
-      </a>
-      <a class="lt-card lt-wa fade-in" href="https://wa.me/62xxxxxxxxxx" target="_blank" style="transition-delay:.23s">
-        <div class="lt-ico"><i class="fa-brands fa-whatsapp"></i></div>
-        <div class="lt-txt"><strong>WhatsApp</strong><span>Chat untuk kerja sama</span></div>
-        <i class="fa-solid fa-arrow-right lt-arr"></i>
-      </a>
-      <a class="lt-card lt-email fade-in" href="mailto:m.naharalduha@gmail.com" style="transition-delay:.26s">
-        <div class="lt-ico"><i class="fa-solid fa-envelope"></i></div>
-        <div class="lt-txt"><strong>Email</strong><span>m.naharalduha@gmail.com</span></div>
+      <a class="lt-card lt-download fade-in" href="/assets/resume-nahara.pdf" target="_blank" style="transition-delay:.2s">
+        <div class="lt-ico"><i class="fa-solid fa-download"></i></div>
+        <div class="lt-txt"><strong>Download Resume</strong><span>PDF • 98 KB</span></div>
         <i class="fa-solid fa-arrow-right lt-arr"></i>
       </a>
     </div>
